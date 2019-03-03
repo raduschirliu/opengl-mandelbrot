@@ -1,9 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "shader.h"
 
 GLFWwindow* window;
-GLuint fragShader;
 
 void errorCallback(int error, const char* desc)
 {
@@ -52,7 +52,11 @@ int main()
 	if (glewInit())
 	{
 		printf("Glew init failed");
+		return 1;
 	}
+
+	Shader shader(GL_FRAGMENT_SHADER);
+	shader.load("shader.glsl");
 
 	while (!glfwWindowShouldClose(window))
 	{
