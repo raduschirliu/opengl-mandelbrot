@@ -1,9 +1,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "shader.h"
+#include "program.h"
 
 GLFWwindow* window;
+Program program;
 
 void errorCallback(int error, const char* desc)
 {
@@ -13,13 +14,28 @@ void errorCallback(int error, const char* desc)
 void draw()
 {
 	int width, height;
+
 	glfwGetFramebufferSize(window, &width, &height);
 	glViewport(0, 0, width, height);
 
-	glClearColor(1, 1, 1, 1);
+	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	program.use();
 
+	glBegin(GL_QUADS);
+		//glTexCoord2f(0, 0);
+		glVertex2f(-1, -1);
+
+		//glTexCoord2f(1, 0);
+		glVertex2f(1, -1);
+
+		//glTexCoord2f(1, 1);
+		glVertex2f(1, 1);
+
+		//glTexCoord2f(0, 1);
+		glVertex2f(-1, 1);
+	glEnd();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
@@ -55,8 +71,10 @@ int main()
 		return 1;
 	}
 
-	Shader shader(GL_FRAGMENT_SHADER);
-	shader.load("shader.glsl");
+	program.create();
+	program.addShader(GL_FRAGMENT_SHADER, "shader.frag");
+	program.link();
+
 
 	while (!glfwWindowShouldClose(window))
 	{

@@ -1,4 +1,0 @@
-wow
-some
-great
-shader!!

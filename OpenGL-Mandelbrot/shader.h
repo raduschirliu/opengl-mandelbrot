@@ -8,7 +8,6 @@ class Shader
 	public:
 		Shader(GLenum type);
 		void load(const char* file);
-		void compile();
 		void attach(GLuint program);
 
 	private:

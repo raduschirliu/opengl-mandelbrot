@@ -1,35 +1,46 @@
 #include "shader.h"
-#include <GL/glew.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 
 Shader::Shader(GLenum type)
 {
 	id = glCreateShader(type);
 }
 
-void Shader::load(const char* file)
+void Shader::load(const char* filePath)
 {
-	std::ifstream fileStream;
-	fileStream.open(file);
+	std::ifstream file(filePath);
 
-	char* text = new char();
-	
-	if (fileStream.is_open())
+	if (file.is_open())
 	{
-		while (!fileStream.eof())
+		std::string str;
+		std::string line;
+
+		while (!file.eof())
 		{
-			fileStream >> text;
+			std::getline(file, line);
+			str += line;
+			str.push_back('\n');
+		}
+		
+		const char* cStr = str.c_str();
+		glShaderSource(id, 1, &cStr, NULL);
+		glCompileShader(id);
+
+		int success;
+		glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+
+		if (!success)
+		{
+			char info[512];
+			glGetShaderInfoLog(id, 512, NULL, info);
+			printf("Shader compilation error for '%s': %s\n", filePath, info);
 		}
 	}
 
-	fileStream.close();
-	glShaderSource(id, 1, &text, NULL);
-}
-
-void Shader::compile()
-{
-	glCompileShader(id);
+	file.close();
 }
 
 void Shader::attach(GLuint program)
