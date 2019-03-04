@@ -31,15 +31,15 @@ int Program::getUniformLocation(const char* name)
 
 void Program::setUniform(const char* name, int v1)
 {
-	glUniform1i(this->getUniformLocation(name), v1);
+	glUniform1i(getUniformLocation(name), v1);
 }
 
 void Program::setUniform(const char* name, float v1)
 {
-	glUniform1f(this->getUniformLocation(name), v1);
+	glUniform1f(getUniformLocation(name), v1);
 }
 
 void Program::setUniform(const char* name, float v1, float v2, float v3, float v4)
 {
-	glUniform4f(this->getUniformLocation(name), v1, v2, v3, v4);
+	glUniform4f(getUniformLocation(name), v1, v2, v3, v4);
 }

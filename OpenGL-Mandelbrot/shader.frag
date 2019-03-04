@@ -1,8 +1,13 @@
 #version 330 core
 
 out vec4 color;
+uniform int iters;
+uniform float limit;
 
 void main()
 {
-	color = vec4(0.5, 0.1, 0.1, 1);
+	for (int i = 0; i < iters; i++)
+	{
+		
+	}
 }

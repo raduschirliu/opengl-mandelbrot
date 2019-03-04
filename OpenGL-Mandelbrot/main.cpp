@@ -22,18 +22,13 @@ void draw()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	program.use();
+	program.setUniform("iters", 100);
+	program.setUniform("limit", 25.0f);
 
 	glBegin(GL_QUADS);
-		//glTexCoord2f(0, 0);
 		glVertex2f(-1, -1);
-
-		//glTexCoord2f(1, 0);
 		glVertex2f(1, -1);
-
-		//glTexCoord2f(1, 1);
 		glVertex2f(1, 1);
-
-		//glTexCoord2f(0, 1);
 		glVertex2f(-1, 1);
 	glEnd();
 
@@ -52,9 +47,10 @@ int main()
 	glfwSetErrorCallback(errorCallback);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_RESIZABLE, 0);
 
-	window = glfwCreateWindow(640, 480, "Mandelbrot", NULL, NULL);
+	window = glfwCreateWindow(1024, 768, "Mandelbrot", NULL, NULL);
 
 	if (!window)
 	{

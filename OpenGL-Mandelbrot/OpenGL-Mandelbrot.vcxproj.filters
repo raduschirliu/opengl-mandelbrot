@@ -37,5 +37,8 @@
     <None Include="shader.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
