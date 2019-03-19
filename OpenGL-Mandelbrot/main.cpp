@@ -22,8 +22,8 @@ void draw()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	program.use();
-	program.setUniform("iters", 100);
-	program.setUniform("limit", 25.0f);
+	program.setUniform("xOffset", 0);
+	program.setUniform("yOffset", 0);
 
 	glBegin(GL_QUADS);
 		glVertex2f(-1, -1);
