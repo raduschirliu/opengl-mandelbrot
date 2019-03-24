@@ -39,6 +39,11 @@ void Program::setUniform(const char* name, float v1)
 	glUniform1f(getUniformLocation(name), v1);
 }
 
+void Program::setUniform(const char* name, float v1, float v2)
+{
+	glUniform2f(getUniformLocation(name), v1, v2);
+}
+
 void Program::setUniform(const char* name, float v1, float v2, float v3, float v4)
 {
 	glUniform4f(getUniformLocation(name), v1, v2, v3, v4);

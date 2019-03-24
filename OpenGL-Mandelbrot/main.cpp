@@ -5,6 +5,13 @@
 
 GLFWwindow* window;
 Program program;
+float minX = -2;
+float maxX = 1;
+
+float lerp(float start, float end, float p)
+{
+	return start + (end - start) * p;
+}
 
 void errorCallback(int error, const char* desc)
 {
@@ -25,6 +32,9 @@ void draw()
 	program.setUniform("width", width);
 	program.setUniform("height", height);
 
+	program.setUniform("xBounds", minX, maxX);
+	program.setUniform("yBounds", -1.5, 1.5);
+
 	glBegin(GL_QUADS);
 		glVertex2f(-1, -1);
 		glVertex2f(1, -1);
@@ -34,6 +44,9 @@ void draw()
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+
+	minX = lerp(minX, -2, 0.01);
+	maxX = lerp(maxX, -1, 0.01);
 }
 
 int main()
