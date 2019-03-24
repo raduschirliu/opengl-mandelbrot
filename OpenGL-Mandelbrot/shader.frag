@@ -4,10 +4,8 @@ precision highp float;
 
 layout(location = 0) out vec4 fragColor;
 
-uniform float xOffset;
-uniform float yOffset;
-const float width = 640.0;
-const float height = 480.0;
+uniform int width;
+uniform int height;
 const int itters = 200;
 const float large = 100.0;
 
@@ -18,8 +16,8 @@ float map(float value, float min1, float max1, float min2, float max2)
 
 void main()
 {
-    float A = map(gl_FragCoord.x, 0.0, width, -2.0, 2.0);
-    float B = map(gl_FragCoord.y, 0.0, height, -2.0, 2.0);
+    float A = map(gl_FragCoord.x, 0.0, width, -2.0, 1);
+    float B = map(gl_FragCoord.y, 0.0, height, -1.5, 1.5);
     float a = A;
     float b = B;
     int i;
