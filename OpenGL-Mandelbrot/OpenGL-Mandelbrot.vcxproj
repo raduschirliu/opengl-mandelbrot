@@ -81,6 +81,7 @@
     <Link>
       <AdditionalLibraryDirectories>I:\Programming\C++\Libraries\glew-2.1.0\lib\Release\Win32;I:\Programming\C++\Libraries\glfw-3.2.1\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

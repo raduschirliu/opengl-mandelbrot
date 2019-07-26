@@ -1,14 +1,21 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cmath>
 #include "program.h"
 
 GLFWwindow* window;
 Program program;
-float minX = -2;
-float maxX = 1;
+double minX = -2, maxX = 1;
+double minY = -1.5, maxY = 1.5;
+double zoomSpeed = 0.005;
 
 float lerp(float start, float end, float p)
+{
+	return start + (end - start) * p;
+}
+
+double dlerp(double start, double end, double p)
 {
 	return start + (end - start) * p;
 }
@@ -33,7 +40,7 @@ void draw()
 	program.setUniform("height", height);
 
 	program.setUniform("xBounds", minX, maxX);
-	program.setUniform("yBounds", -1.5, 1.5);
+	program.setUniform("yBounds", minY, maxY);
 
 	glBegin(GL_QUADS);
 		glVertex2f(-1, -1);
@@ -45,12 +52,21 @@ void draw()
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
-	minX = lerp(minX, -2, 0.01);
-	maxX = lerp(maxX, -1, 0.01);
+	printf("X: %lf : %lf\tY: %lf : %lf\t@ Speed: %lf\n", minX, maxX, minY, maxY, zoomSpeed);
+
+	minX = dlerp(minX, -1.4, 0.005);
+	maxX = dlerp(maxX, -1.3, 0.005);
+
+	minY = dlerp(minY, -0.05, 0.005);
+	maxY = dlerp(maxY, 0.05, 0.005);
+
+	zoomSpeed = sqrt(zoomSpeed);
 }
 
 int main()
 {
+	printf("Running...\n");
+
 	if (!glfwInit())
 	{
 		printf("Failed to initialize GLFW\n");

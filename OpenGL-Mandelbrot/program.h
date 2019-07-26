@@ -17,6 +17,7 @@ class Program
 		void setUniform(const char* name, int v1);
 		void setUniform(const char* name, float v1);
 		void setUniform(const char* name, float v1, float v2);
+		void setUniform(const char* name, double v1, double v2);
 		void setUniform(const char* name, float v1, float v2, float v3, float v4);
 		
 		GLuint id;
