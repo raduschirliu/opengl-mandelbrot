@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 #include "program.h"
 
 GLFWwindow* window;
@@ -58,12 +59,15 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 	{
 		double newMinX = map(mouseStartX, 0, width, minX, maxX);
 		double newMinY = map(mouseStartY, 0, height, minY, maxY);
-		
-		maxX = map(x, 0, width, minX, maxX);
-		maxY = map(y, 0, height, minY, maxY);
+		double newMaxX = map(x, 0, width, minX, maxX);
+		double newMaxY = map(y, 0, height, minY, maxY);
 
-		minX = newMinX;
-		minY = newMinY;
+		minX = std::min(newMinX, newMaxX);
+		maxX = std::max(newMinX, newMaxX);
+
+		// Negative vertical axis of a complex plane is down. Negative vertical axis of screen plane is up
+		minY = std::max(newMinY, newMaxY);
+		maxY = std::min(newMinY, newMaxY);
 
 		isDragging = false;
 
@@ -128,11 +132,11 @@ void draw()
 
 int main()
 {
-	printf("Running...\n");
+	printf("Running...\n\n");
 
 	if (!glfwInit())
 	{
-		printf("Failed to initialize GLFW\n");
+		printf("\nFailed to initialize GLFW\n\n");
 		return 1;
 	}
 
@@ -143,7 +147,7 @@ int main()
 
 	if (!window)
 	{
-		printf("Failed to create window\n");
+		printf("\nFailed to create window\n\n");
 		return 1;
 	}
 
@@ -152,7 +156,7 @@ int main()
 
 	if (glewInit())
 	{
-		printf("Glew init failed");
+		printf("\nGlew init failed\n\n");
 		return 1;
 	}
 

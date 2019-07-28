@@ -9,20 +9,15 @@ uniform int width, height;
 uniform int iters = 300;
 const double large = 150.0;
 
-float map(float value, float inMin, float inMax, float outMin, float outMax)
-{
-    return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
-}
-
-double dmap(double value, double inMin, double inMax, double outMin, double outMax)
+double map(double value, double inMin, double inMax, double outMin, double outMax)
 {
     return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
 }
 
 void main()
 {
-    double A = dmap(gl_FragCoord.x, 0.0, width, xBounds.x, xBounds.y);
-    double B = dmap(gl_FragCoord.y, 0.0, height, yBounds.x, yBounds.y);
+    double A = map(gl_FragCoord.x, 0.0, width, xBounds.x, xBounds.y);
+    double B = map(gl_FragCoord.y, 0.0, height, yBounds.x, yBounds.y);
     double a = A;
     double b = B;
     int i;
