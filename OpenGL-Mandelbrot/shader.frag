@@ -6,7 +6,7 @@ layout(location = 0) out vec4 fragColor;
 
 uniform dvec2 xBounds, yBounds;
 uniform int width, height;
-uniform int itters = 300;
+uniform int iters = 300;
 const double large = 150.0;
 
 float map(float value, float inMin, float inMax, float outMin, float outMax)
@@ -27,7 +27,7 @@ void main()
     double b = B;
     int i;
 
-    for (i = 0; i < itters; i++)
+    for (i = 0; i < iters; i++)
     {
         double aa = a * a;
         double bb = b * b;
@@ -39,6 +39,6 @@ void main()
         if (aa + bb > large) break;
     }
 
-    float p = float(i) / float(itters);
+    float p = float(i) / float(iters);
     fragColor = vec4(log(p), sin(p), p, 1);
 }

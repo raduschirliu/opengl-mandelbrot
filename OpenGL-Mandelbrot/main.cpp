@@ -6,7 +6,7 @@
 
 GLFWwindow* window;
 Program program;
-int itters = 300;
+int iters = 300;
 int width, height;
 bool isDragging = false;
 double mouseStartX, mouseStartY;
@@ -38,7 +38,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 	{
 		minX = -2, maxX = 1;
 		minY = -1.5, maxY = 1.5;
-		itters = 300;
+		iters = 300;
 		printf("Reset view\n");
 	}
 
@@ -67,17 +67,17 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		isDragging = false;
 
 		printf("Set new bounds:\n-> X: %lf : %lf\tY: %lf : %lf\n", minX, maxX, minY, maxY);
-		printf("Itters: %i\n", itters);
+		printf("iters: %i\n", iters);
 	}
 }
 
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
-	itters = itters + yOffset * 300;
+	iters = iters + yOffset * 300;
 	
-	if (itters < 300) itters = 300;
+	if (iters < 300) iters = 300;
 
-	printf("Itters: %i\n", itters);
+	printf("iters: %i\n", iters);
 }
 
 void draw()
@@ -94,7 +94,7 @@ void draw()
 	program.use();
 	program.setUniform("width", width);
 	program.setUniform("height", height);
-	program.setUniform("itters", itters);
+	program.setUniform("iters", iters);
 
 	program.setUniform("xBounds", minX, maxX);
 	program.setUniform("yBounds", minY, maxY);
