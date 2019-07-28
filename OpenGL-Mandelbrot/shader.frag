@@ -6,7 +6,7 @@ layout(location = 0) out vec4 fragColor;
 
 uniform dvec2 xBounds, yBounds;
 uniform int width, height;
-const int itters = 300;
+uniform int itters = 300;
 const double large = 150.0;
 
 float map(float value, float inMin, float inMax, float outMin, float outMax)
