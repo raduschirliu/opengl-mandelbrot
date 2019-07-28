@@ -64,12 +64,20 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		minX = newMinX;
 		minY = newMinY;
 
-		itters *= 1.125;
 		isDragging = false;
 
 		printf("Set new bounds:\n-> X: %lf : %lf\tY: %lf : %lf\n", minX, maxX, minY, maxY);
 		printf("Itters: %i\n", itters);
 	}
+}
+
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	itters = itters + yOffset * 300;
+	
+	if (itters < 300) itters = 300;
+
+	printf("Itters: %i\n", itters);
 }
 
 void draw()
@@ -156,6 +164,7 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glfwSetMouseButtonCallback(window, mouseCallback);
+	glfwSetScrollCallback(window, scrollCallback);
 
 	while (!glfwWindowShouldClose(window))
 	{
