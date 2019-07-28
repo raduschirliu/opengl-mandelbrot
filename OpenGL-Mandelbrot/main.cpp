@@ -13,10 +13,6 @@ bool isDragging = false;
 double mouseStartX, mouseStartY;
 double minX = -2, maxX = 1;
 double minY = -1.5, maxY = 1.5;
-double zoomSpeed = 0.005;
-double targetX = -1.375;
-double targetY = 0;
-double targetSpeed = 0.005;
 
 double lerp(double start, double end, double p)
 {
@@ -30,18 +26,28 @@ double map(double value, double inMin, double inMax, double outMin, double outMa
 
 void errorCallback(int error, const char* desc)
 {
-	printf("GLFW Error: %s\n", desc);
+	printf("\nGLFW Error: %s\n\n", desc);
 }
 
 void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 	{
-		minX = -2, maxX = 1;
-		minY = -1.5, maxY = 1.5;
-		iters = 300;
-		printf("\nReset view\n\n");
-		isDragging = false;
+		if (isDragging)
+		{
+			printf("Cancelled zoom\n");
+			isDragging = false;
+		}
+		else
+		{
+			minX = -2, maxX = 1;
+			minY = -1.5, maxY = 1.5;
+			iters = 300;
+			printf("Reset view\n");
+			isDragging = false;
+		}
+
+		return;
 	}
 
 	if (button != GLFW_MOUSE_BUTTON_LEFT) return;
@@ -54,6 +60,8 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		isDragging = true;
 		mouseStartX = x;
 		mouseStartY = y;
+
+		printf("(%f, %f)\n", x, y);
 	}
 	else if (action == GLFW_RELEASE && isDragging)
 	{
@@ -110,7 +118,7 @@ void draw()
 		glVertex2f(0, height);
 	glEnd();
 
-	glUseProgram(0);
+	program.clear();
 
 	if (isDragging)
 	{

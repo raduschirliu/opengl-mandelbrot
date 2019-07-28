@@ -36,7 +36,7 @@ void Shader::load(const char* filePath)
 		{
 			char info[512];
 			glGetShaderInfoLog(id, 512, NULL, info);
-			printf("Shader compilation error for '%s': %s\n", filePath, info);
+			printf("\nShader compilation error for '%s': %s\n\n", filePath, info);
 		}
 	}
 
