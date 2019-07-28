@@ -39,7 +39,8 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		minX = -2, maxX = 1;
 		minY = -1.5, maxY = 1.5;
 		iters = 300;
-		printf("Reset view\n");
+		printf("\nReset view\n\n");
+		isDragging = false;
 	}
 
 	if (button != GLFW_MOUSE_BUTTON_LEFT) return;
@@ -53,7 +54,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		mouseStartX = x;
 		mouseStartY = y;
 	}
-	else if (action == GLFW_RELEASE)
+	else if (action == GLFW_RELEASE && isDragging)
 	{
 		double newMinX = map(mouseStartX, 0, width, minX, maxX);
 		double newMinY = map(mouseStartY, 0, height, minY, maxY);
@@ -66,8 +67,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 
 		isDragging = false;
 
-		printf("Set new bounds:\n-> X: %lf : %lf\tY: %lf : %lf\n", minX, maxX, minY, maxY);
-		printf("iters: %i\n", iters);
+		printf("New Bounds:\n\tX: %lf : %lf\tY: %lf : %lf\n", minX, maxX, minY, maxY);
 	}
 }
 
@@ -77,7 +77,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 	
 	if (iters < 300) iters = 300;
 
-	printf("iters: %i\n", iters);
+	printf("Iterations: %i\n", iters);
 }
 
 void draw()
