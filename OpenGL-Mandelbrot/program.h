@@ -12,6 +12,7 @@ class Program
 		void addShader(GLenum type, const char* filePath);
 		void link();
 		void use();
+		void clear();
 
 		int getUniformLocation(const char* name);
 		void setUniform(const char* name, int v1);

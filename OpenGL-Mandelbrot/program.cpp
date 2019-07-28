@@ -24,6 +24,11 @@ void Program::use()
 	glUseProgram(id);
 }
 
+void Program::clear()
+{
+	glUseProgram(0);
+}
+
 int Program::getUniformLocation(const char* name)
 {
 	return glGetUniformLocation(id, name);
