@@ -116,7 +116,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 
 		isDragging = false;
 
-		printf("New Bounds:\n\tX: %lf : %lf\tY: %lf : %lf\n", minX, maxX, minY, maxY);
+		printf("Set new bounds:\n\tX: [%lf, %lf]\tY: [%lf, %lf]\n", minX, maxX, minY, maxY);
 	}
 }
 
@@ -127,7 +127,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 	
 	if (iters < 300) iters = 300;
 
-	printf("Iterations: %i\n", iters);
+	printf("Set resolution: %d itterations\n", iters);
 }
 
 // Apply shader and draw mandelbrot
