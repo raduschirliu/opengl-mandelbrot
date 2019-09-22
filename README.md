@@ -1,7 +1,7 @@
 # opengl-mandelbrot
 A very simple Mandelbrot renderer created in C++, using OpenGL and GLFW. This is by no means a fast or efficient way to do it, as it was only really meant for learning OpenGL and GLSL.
 
-### Usage
+### Building
 First, the project requires the following dependencies:
 - GLEW 2.1.0
 - GLFW 3.2.1
@@ -11,3 +11,11 @@ The solution is configured to look for them in a `lib` folder in the project roo
 If using Visual Studio 2017, the project solution should just be ready to open and then build for Win32 Debug/Release.
 
 _Note: This has only been tested using Visual Studio 2017 on Windows 7/10_
+
+### Usage
+Once running, these are the controls:
+- Left click drag: Select an area to zoom into
+- Right click: Reset zoom and resolution to default, or cancel zoom selection
+- Mouse scroll: Change drawing resolution (number of itterations)
+
+![Screenshot](Media/Screenshot.png)
