@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include "program.h"
+#include "util.h"
 
 
 GLFWwindow* window;
@@ -17,17 +18,12 @@ double minX = -2, maxX = 1;
 double minY = -1.5, maxY = 1.5;
 
 
-// Linearly interpolates between two values
-double lerp(double start, double end, double p)
-{
-	return start + (end - start) * p;
-}
+void errorCallback(int error, const char* desc);
+void mouseCallback(GLFWwindow* window, int button, int action, int mods);
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void drawMandelbrot(int x, int y, int w, int h);
+void draw();
 
-// Map a value from an input range to an output range
-double map(double value, double inMin, double inMax, double outMin, double outMax)
-{
-	return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
-}
 
 // Called on GLFW errors
 void errorCallback(int error, const char* desc)
@@ -64,8 +60,8 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
 	{
-		double xp = map(x, 0, width, minX, maxX);
-		double yp = map(y, 0, height, minY, maxY);
+		double xp = Util::map(x, 0, width, minX, maxX);
+		double yp = Util::map(y, 0, height, minY, maxY);
 		printf("(%lf, %lf)\t(%lf, %lf)\n", xp, yp, x, y);
 
 		return;
@@ -104,12 +100,12 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		if (x > width) x = width;
 		if (y > height) y = height;
 
-		double newMinX = map(mouseStartX, 0, width, minX, maxX);
-		double newMaxX = map(x, 0, width, minX, maxX);
+		double newMinX = Util::map(mouseStartX, 0, width, minX, maxX);
+		double newMaxX = Util::map(x, 0, width, minX, maxX);
 
 		// Min and max flipped since 0 on Im axis is at the bottom, and 0 in OpenGL was mapped to the top
-		double newMinY = map(mouseStartY, 0, height, maxY, minY);
-		double newMaxY = map(y, 0, height, maxY, minY);
+		double newMinY = Util::map(mouseStartY, 0, height, maxY, minY);
+		double newMaxY = Util::map(y, 0, height, maxY, minY);
 
 		minX = std::min(newMinX, newMaxX);
 		maxX = std::max(newMinX, newMaxX);
@@ -156,7 +152,7 @@ void drawMandelbrot(int x, int y, int w, int h)
 	program.clear();
 }
 
-// Called to update window drawing
+// Called to redraw window
 void draw()
 {
 	glfwGetFramebufferSize(window, &width, &height);
@@ -227,7 +223,6 @@ int main()
 		return 1;
 	}
 
-	program.create();
 	program.addShader(GL_FRAGMENT_SHADER, "shader.frag");
 	program.link();
 
