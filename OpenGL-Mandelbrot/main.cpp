@@ -11,6 +11,7 @@ Program program;
 int iters = 300;
 int width, height;
 bool isDragging = false;
+bool shouldRedraw = false;
 double mouseStartX, mouseStartY;
 double minX = -2, maxX = 1;
 double minY = -1.5, maxY = 1.5;
@@ -22,6 +23,7 @@ double lerp(double start, double end, double p)
 	return start + (end - start) * p;
 }
 
+// Map a value from an input range to an output range
 double map(double value, double inMin, double inMax, double outMin, double outMax)
 {
 	return outMin + (value - inMin) * (outMax - outMin) / (inMax - inMin);
@@ -42,7 +44,6 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		if (isDragging)
 		{
 			printf("Cancelled selection\n");
-			isDragging = false;
 		}
 		else
 		{
@@ -50,8 +51,10 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 			minY = -1.5, maxY = 1.5;
 			iters = 300;
 			printf("Reset view\n");
-			isDragging = false;
 		}
+
+		isDragging = false;
+		shouldRedraw = true;
 
 		return;
 	}
@@ -115,6 +118,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods)
 		maxY = std::max(newMinY, newMaxY);
 
 		isDragging = false;
+		shouldRedraw = true;
 
 		printf("Set new bounds:\n\tX: [%lf, %lf]\tY: [%lf, %lf]\n", minX, maxX, minY, maxY);
 	}
@@ -126,6 +130,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 	iters = iters + yOffset * 300;
 	
 	if (iters < 300) iters = 300;
+	shouldRedraw = true;
 
 	printf("Set resolution: %d itterations\n", iters);
 }
@@ -160,10 +165,13 @@ void draw()
 	glViewport(0, 0, width, height);
 	glOrtho(0, width, height, 0, -1, 1);
 
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
+	if (shouldRedraw || isDragging)
+	{
+		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-	drawMandelbrot(0, 0, width, height);
+		drawMandelbrot(0, 0, width, height);
+	}
 
 	if (isDragging)
 	{
@@ -179,7 +187,12 @@ void draw()
 		glEnd();
 	}
 
-	glfwSwapBuffers(window);
+	if (shouldRedraw || isDragging)
+	{
+		glfwSwapBuffers(window);
+		shouldRedraw = false;
+	}
+
 	glfwPollEvents();
 }
 
@@ -223,6 +236,8 @@ int main()
 
 	glfwSetMouseButtonCallback(window, mouseCallback);
 	glfwSetScrollCallback(window, scrollCallback);
+
+	shouldRedraw = true;
 
 	while (!glfwWindowShouldClose(window))
 	{
