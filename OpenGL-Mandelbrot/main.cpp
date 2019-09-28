@@ -223,6 +223,7 @@ int main()
 		return 1;
 	}
 
+	program.create();
 	program.addShader(GL_FRAGMENT_SHADER, "shader.frag");
 	program.link();
 
