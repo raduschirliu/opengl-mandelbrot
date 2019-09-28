@@ -35,5 +35,5 @@ void main()
     }
 
     float p = float(i) / float(iters);
-    fragColor = vec4(log(p), sin(p), p, 1);
+    fragColor = vec4(0, sin(p), p, 1);
 }
